@@ -121,7 +121,7 @@ class UNET_AttentionBlock(nn.Module):
 class  SwithSequential(nn.Sequential):
     def forward(self, x: torch.Tensor, context: torch.Tensor, time: torch.Tensor) -> torch.Tensor:
         for layer in self:
-            if isinstance(layer, UNET_AttetionBlock):
+            if isinstance(layer, UNET_AttentionBlock):
                 x = layer(x, context)
             elif isinstance(layer, ResidualBlock):
                 x = layer(x, time)
