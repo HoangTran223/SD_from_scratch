@@ -158,32 +158,32 @@ class UNET(nn.Module):
             SwithSequential(UNET_ResidualBlock(640, 1280), UNET_AttentionBlock(8, 160)),
         ])
 
-    self.bottleneck = SwithSequential(
-        UNET_ResidualBlock(1280, 1280),
-        UNET_AttentionBlock(8, 160),
-        UNET_ResidualBlock(1280, 1280),
-    )
+        self.bottleneck = SwithSequential(
+            UNET_ResidualBlock(1280, 1280),
+            UNET_AttentionBlock(8, 160),
+            UNET_ResidualBlock(1280, 1280),
+        )
 
-    self.decoders = nn.ModuleList([
-        # (batch_size, 2560, Height / 64, Width / 64) -> (batch_size, 1280, Height / 64, Width / 64)
-        SwithSequential(UNET_ResidualBlock(2560, 1280)),
-        SwithSequential(UNET_ResidualBlock(2560, 1280)),
-        SwithSequential(UNET_ResidualBlock(2560, 1280), Upsample(1280)),
+        self.decoders = nn.ModuleList([
+            # (batch_size, 2560, Height / 64, Width / 64) -> (batch_size, 1280, Height / 64, Width / 64)
+            SwithSequential(UNET_ResidualBlock(2560, 1280)),
+            SwithSequential(UNET_ResidualBlock(2560, 1280)),
+            SwithSequential(UNET_ResidualBlock(2560, 1280), Upsample(1280)),
 
-        SwithSequential(UNET_ResidualBlock(2560, 1280), UNET_AttentionBlock(8, 160)),
-        SwithSequential(UNET_ResidualBlock(2560, 1280), UNET_AttentionBlock(8, 160)),
-        SwithSequential(UNET_ResidualBlock(1920, 1280), UNET_AttentionBlock(8, 160), Upsample(1280)),
+            SwithSequential(UNET_ResidualBlock(2560, 1280), UNET_AttentionBlock(8, 160)),
+            SwithSequential(UNET_ResidualBlock(2560, 1280), UNET_AttentionBlock(8, 160)),
+            SwithSequential(UNET_ResidualBlock(1920, 1280), UNET_AttentionBlock(8, 160), Upsample(1280)),
 
-        SwithSequential(UNET_ResidualBlock(1920, 640), UNET_AttentionBlock(8, 80)),
-        SwithSequential(UNET_ResidualBlock(1280, 640), UNET_AttentionBlock(8, 80)),
-        SwithSequential(UNET_ResidualBlock(960, 640), UNET_AttentionBlock(8, 80), upSample(640)),
+            SwithSequential(UNET_ResidualBlock(1920, 640), UNET_AttentionBlock(8, 80)),
+            SwithSequential(UNET_ResidualBlock(1280, 640), UNET_AttentionBlock(8, 80)),
+            SwithSequential(UNET_ResidualBlock(960, 640), UNET_AttentionBlock(8, 80), upSample(640)),
 
-        SwithSequential(UNET_ResidualBlock(960, 320), UNET_AttentionBlock(8, 40)),
+            SwithSequential(UNET_ResidualBlock(960, 320), UNET_AttentionBlock(8, 40)),
 
-        # Do skip-connection -> concat feature encode + decoder, giu nguyen 80 tu encoder
-        SwithSequential(UNET_ResidualBlock(640, 320), UNET_AttentionBlock(8, 80)),
-        SwithSequential(UNET_ResidualBlock(1280, 640), UNET_AttentionBlock(8, 40)),
-    ])
+            # Do skip-connection -> concat feature encode + decoder, giu nguyen 80 tu encoder
+            SwithSequential(UNET_ResidualBlock(640, 320), UNET_AttentionBlock(8, 80)),
+            SwithSequential(UNET_ResidualBlock(1280, 640), UNET_AttentionBlock(8, 40)),
+        ])
 
 
 class UNET_OutputLayer(nn.Module):
