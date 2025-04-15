@@ -2,7 +2,7 @@
 
 def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.Tensor]:
     # Taken from: https://github.com/kjsman/stable-diffusion-pytorch/issues/7#issuecomment-1426839447
-    checkpoint = torch.load(input_file, map_location="cpu", weight_only=False)
+    checkpoint = torch.load(input_file, map_location=device, weight_only=False)
 
     # Use "state_dict" only
     if "state_dict" in checkpoint:
