@@ -3,7 +3,7 @@ from .encoder import VAE_Encoder
 from .decoder import VAE_Decoder
 from .diffusion import Diffusion
 
-import model_converter
+from sd import model_converter
 
 def preload_models_from_standard_weights(path, device):
     state_dict = model_converter.load_from_standard_weights(path, device)
