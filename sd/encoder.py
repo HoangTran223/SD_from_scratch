@@ -6,8 +6,8 @@ from .decoder import VAE_AttentionBlock, VAE_ResidualBlock
 
 class VAE_Encoder(nn.Module):
     def __init__(self):
-        super().__init__()
-         self.layers = nn.ModuleList([
+        super(VAE_Encoder, self).__init__()
+        self.layers = nn.ModuleList([
             # (Batch_size, Channel, Height, Width) -> (Batch_size, 128, Height, Width)
             nn.Conv2d(3, 128, kernel_size=3, padding=1),
 
