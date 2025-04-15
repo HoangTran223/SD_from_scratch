@@ -4,9 +4,10 @@ from torch.nn import functional as F
 from .decoder import VAE_AttentionBlock, VAE_ResidualBlock
 
 
-class VAE_Encoder(nn.Sequential):
+class VAE_Encoder(nn.Module):
     def __init__(self):
-        super(VAE_Encoder, self).__init__(*[
+        super().__init__()
+         self.layers = nn.ModuleList([
             # (Batch_size, Channel, Height, Width) -> (Batch_size, 128, Height, Width)
             nn.Conv2d(3, 128, kernel_size=3, padding=1),
 
@@ -61,7 +62,7 @@ class VAE_Encoder(nn.Sequential):
         # x: (Batch_size, channel, height, width)
         # noise: (Batch_size, out_channel, height / 8, width / 8) 
         
-        for module in self:
+        for module in self.layers:
             if getattr(module, 'stride', None) == 2:
                 # (Padding_left, right, top, bottom)
                 x = F.pad(x, (0, 1, 0, 1))
