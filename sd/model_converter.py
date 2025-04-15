@@ -2,20 +2,7 @@
 
 def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.Tensor]:
     # Taken from: https://github.com/kjsman/stable-diffusion-pytorch/issues/7#issuecomment-1426839447
-    # checkpoint = torch.load(input_file, map_location=device, weight_only=False)
-
-    # # Use "state_dict" only
-    # if "state_dict" in checkpoint:
-    #     original_model = checkpoint["state_dict"]
-    # else:
-    #     original_model = checkpoint
-    if input_file.endswith(".safetensors"):
-        # Load file .safetensors
-        state_dict = safetensors_load(input_file, device="cpu")
-    else:
-        # Load file .ckpt (giữ logic gốc)
-        checkpoint = torch.load(input_file, map_location="cpu")
-        state_dict = checkpoint["state_dict"] if "state_dict" in checkpoint else checkpoint
+    original_model = torch.load(input_file, map_location=device, weights_only = False)["state_dict"]
 
     converted = {}
     converted['diffusion'] = {}
