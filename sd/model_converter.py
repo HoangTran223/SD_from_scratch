@@ -3,10 +3,13 @@ from safetensors.torch import load_file as load_safetensors
 
 def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.Tensor]:
     # Taken from: https://github.com/kjsman/stable-diffusion-pytorch/issues/7#issuecomment-1426839447
+    print(f"[INFO] Loading weights from: {input_file}")
+
     if input_file.endswith(".safetensors"):
         original_model = load_safetensors(input_file, device=device)
     else:
-        original_model = torch.load(input_file, map_location=device)["state_dict"]
+        raise ValueError("Only .safetensors files are supported in this loader!")
+
 
     converted = {}
     converted['diffusion'] = {}
