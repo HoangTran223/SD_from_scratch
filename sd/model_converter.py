@@ -2,7 +2,7 @@
 
 def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.Tensor]:
     # Taken from: https://github.com/kjsman/stable-diffusion-pytorch/issues/7#issuecomment-1426839447
-    original_model = torch.load(input_file, map_location="cpu", weights_only = False)["state_dict"]
+    original_model = torch.load(input_file, map_location="cpu")["state_dict"]
 
     converted = {}
     converted['diffusion'] = {}
