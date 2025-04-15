@@ -6,7 +6,8 @@ def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.
     if input_file.endswith(".safetensors"):
         original_model = load_safetensors(input_file, device=device)
     else:
-        original_model = torch.load(input_file, map_location=device)["state_dict"]
+        original_model = torch.load(input_file, map_location=device, weights_only=False)["state_dict"]
+
 
     converted = {}
     converted['diffusion'] = {}
